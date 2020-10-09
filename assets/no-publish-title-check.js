@@ -18,7 +18,7 @@ class NoPublishComponent extends Component {
         postTitle: postTitle,
       });
 
-      if (postTitle.toLowerCase().indexOf("do not publish") !== -1) {
+      if (postTitle.toLowerCase().includes("do not publish")) {
         this.setState({
           icon: "thumbs-down",
           message: "Title must be corrected",
