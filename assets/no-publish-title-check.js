@@ -69,10 +69,10 @@ class NoPublishComponent extends Component {
   };
   render() {
     return (
-      <PluginPrePublishPanel title="Title Check " icon={this.state.icon}>
+      <PluginPrePublishPanel title="Title Check" icon={this.state.icon}>
         <p>{this.state.message}</p>
         <NoPublishOverride
-          clickCallback={this.onCheckboxChange}
+          changeCallback={this.onCheckboxChange}
           locked={this.locked}
           showCheckbox={this.showCheckbox}
         />

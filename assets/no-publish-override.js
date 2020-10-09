@@ -6,7 +6,7 @@ class NoPublishOverride extends Component {
     return (
       <p className={hidden}>
         <label>
-          <input onChange={() => this.props.clickCallback()} type="checkbox" />
+          <input onChange={() => this.props.changeCallback()} type="checkbox" />
           Override
         </label>
       </p>
