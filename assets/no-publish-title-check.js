@@ -12,7 +12,7 @@ class NoPublishComponent extends Component {
   componentDidMount() {
     let locked = false; // post lock flag
 
-    subscribe(() => {
+    this.unsubscribe = subscribe(() => {
       postTitle = select("core/editor").getEditedPostAttribute("title");
       this.setState({
         postTitle: postTitle,
@@ -38,6 +38,9 @@ class NoPublishComponent extends Component {
         }
       }
     });
+  }
+  componentDidUnmount() {
+    this.unsubscribe();
   }
   render() {
     return (
