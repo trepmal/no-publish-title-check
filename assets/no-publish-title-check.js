@@ -3,50 +3,79 @@ const { registerPlugin } = wp.plugins;
 const { PluginPrePublishPanel } = wp.editPost;
 const { select, dispatch, subscribe } = wp.data;
 
+import NoPublishOverride from "./no-publish-override";
+
 class NoPublishComponent extends Component {
   state = {
     postTitle: select("core/editor").getEditedPostAttribute("title"),
     icon: "thumbs-up",
     message: "Title checks out!",
   };
+  locked = false; // post lock flag
+  override = false; // checkbox override flag
+  showCheckbox = false;
   componentDidMount() {
-    let locked = false; // post lock flag
-
     this.unsubscribe = subscribe(() => {
-      postTitle = select("core/editor").getEditedPostAttribute("title");
+      const postTitle = select("core/editor").getEditedPostAttribute("title");
       this.setState({
         postTitle: postTitle,
       });
 
-      if (postTitle.toLowerCase().includes("do not publish")) {
-        this.setState({
-          icon: "thumbs-down",
-          message: "Title must be corrected",
-        });
-        if (!locked) {
-          locked = true;
-          dispatch("core/editor").lockPostSaving("do-not-publish");
+      if (!this.override) {
+        if (postTitle.toLowerCase().includes("do not publish")) {
+          this.showCheckbox = true;
+          this.setState({
+            icon: "thumbs-down",
+            message: "Title must be corrected",
+          });
+          if (!this.locked) {
+            this.locked = true;
+            dispatch("core/editor").lockPostSaving("do-not-publish");
+          }
+        } else {
+          this.showCheckbox = false;
+          this.setState({
+            icon: "thumbs-up",
+            message: "Title checks out!",
+          });
+          if (this.locked) {
+            //
+            this.locked = false;
+            dispatch("core/editor").unlockPostSaving("do-not-publish");
+          }
         }
       } else {
+        this.showCheckbox = true;
         this.setState({
           icon: "thumbs-up",
-          message: "Title checks out!",
+          message: "Override!",
         });
-        if (locked) {
-          locked = false;
-          dispatch("core/editor").unlockPostSaving("do-not-publish");
-        }
       }
     });
   }
   componentDidUnmount() {
     this.unsubscribe();
   }
+  onCheckboxChange = (event) => {
+    this.override = !this.override;
+
+    if (this.locked) {
+      this.locked = false;
+      dispatch("core/editor").unlockPostSaving("do-not-publish");
+    } else {
+      this.locked = true;
+      dispatch("core/editor").lockPostSaving("do-not-publish");
+    }
+  };
   render() {
     return (
-      <PluginPrePublishPanel title="Title Check" icon={this.state.icon}>
+      <PluginPrePublishPanel title="Title Check " icon={this.state.icon}>
         <p>{this.state.message}</p>
-        <strong>{this.state.postTitle}</strong>
+        <NoPublishOverride
+          clickCallback={this.onCheckboxChange}
+          locked={this.locked}
+          showCheckbox={this.showCheckbox}
+        />
       </PluginPrePublishPanel>
     );
   }
