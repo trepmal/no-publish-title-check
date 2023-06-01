@@ -9,16 +9,15 @@
     "@babel/preset-react": "^7.22",
     "@wordpress/babel-preset-default": "^7.18",
     "@wordpress/scripts": "^26.5",
-    "babel-core": "^6.26.0",
+    "babel-core": "^4.7.16",
     "babel-loader": "^9.1.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "cross-env": "^7.0.2",
-    "webpack": "^4.44.2"
+    "webpack": "^5.85.0"
   },
   "scripts": {
     "check-engines": "wp-scripts check-engines",
     "start": "wp-scripts start",
     "build": "wp-scripts build"
-  },
-  "dependencies": {}
+  }
 }
