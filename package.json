@@ -4,16 +4,16 @@
   "license": "GPL-2.0-or-later",
   "main": "assets/no-publish-title-check.js",
   "devDependencies": {
+    "@babel/core": "^7.27",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/preset-env": "^7.22",
-    "@babel/preset-react": "^7.22",
-    "@wordpress/babel-preset-default": "^7.18",
-    "@wordpress/scripts": "^26.5",
-    "@babel/core": "^7.22",
-    "babel-loader": "^9.1.0",
+    "@babel/preset-env": "^7.27",
+    "@babel/preset-react": "^7.27",
+    "@wordpress/babel-preset-default": "^8.26",
+    "@wordpress/scripts": "^30.19",
+    "babel-loader": "^10.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "cross-env": "^7.0.2",
-    "webpack": "^5.85.0"
+    "webpack": "^5.99.9"
   },
   "scripts": {
     "check-engines": "wp-scripts check-engines",
